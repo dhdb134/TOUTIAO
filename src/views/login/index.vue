@@ -1,24 +1,37 @@
 <template>
   <div class="login-container">
     <van-nav-bar class="page-nav-bar"   title="登录"/>
-    <van-form @submit="onSubmit">
+    <van-form @submit="onSubmit" ref="LoginForm">
   <van-cell-group inset>
     <van-field
       v-model="user.mobile"
-      name="手机号"
+      name="mobile"
       placeholder="请输入手机号"
       :rules="userFormrules.mobile"
       type="number"
+      maxlength='11'
     ><i slot="left-icon" class="iconfont icon-shouji"></i></van-field>
     <van-field
       v-model="user.code"
-      name="验证码"
+      name="code"
       placeholder="请输入验证码"
       :rules="userFormrules.code"
       type="number"
+      maxlength='4'
     ><i slot="left-icon" class="iconfont icon-yanzhengma"></i>
     <template #button>
-    <van-button class="send-sms-btn" round size="small" type="primary">发送验证码</van-button>
+      <van-count-down
+      :time="1000*10" format="ss s"
+      v-if="isCountDownShow"
+      @finish = 'isCountDownShow = false'/>
+    <van-button
+    v-else
+    class="send-sms-btn"
+    round size="small"
+    type="primary"
+    native-type="button"
+    @click="onSendSms"
+    >发送验证码</van-button>
   </template></van-field>
   </van-cell-group>
   <div style="margin: 16px;">
@@ -31,7 +44,7 @@
 </template>
 
 <script>
-import { login } from '@/api/user'
+import { login, sendSms } from '@/api/user'
 export default {
   name: 'LoginIndex',
   data () {
@@ -59,7 +72,8 @@ export default {
           message: '验证码错误'
         }
         ]
-      }
+      },
+      isCountDownShow: false
     }
   },
   methods: {
@@ -79,6 +93,28 @@ export default {
           this.$toast.success('手机号或验证码错误')
         } else {
           this.$toast.success('登录失败')
+        }
+      }
+    },
+    async  onSendSms () {
+      console.log('xxx')
+      try {
+        await this.$refs.LoginForm.validate('mobile')
+        console.log('验证通过')
+      } catch (err) {
+        return console.log('验证失败', err)
+      }
+      console.log('123')
+      try {
+        await sendSms(this.user.mobile)
+        this.isCountDownShow = true
+        console.log('发送成功')
+      } catch (err) {
+        this.isCountDownShow = false
+        if (err.response.status === 400) {
+          this.$toast('发送太频繁就，请稍后重试')
+        } else {
+          this.$toast('发送失败')
         }
       }
     }
