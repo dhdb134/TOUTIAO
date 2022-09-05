@@ -1,6 +1,8 @@
 <template>
   <div class="login-container">
-    <van-nav-bar class="page-nav-bar"   title="登录"/>
+    <van-nav-bar class="page-nav-bar"   title="登录">
+      <van-icon name="cross" slot="left" @click="$router.back()" />
+    </van-nav-bar>
     <van-form @submit="onSubmit" ref="LoginForm">
   <van-cell-group inset>
     <van-field
@@ -138,4 +140,7 @@ export default {
 .logn-button{
   background-color: blue;
 }
+.van-nav-bar .van-icon{
+        color: #fff;
+    }
 </style>

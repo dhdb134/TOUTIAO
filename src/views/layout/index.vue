@@ -1,11 +1,11 @@
 <template>
   <div class="layout-container">
     <router-view />
-    <van-tabbar v-model="active" class="layout-tabbar">
-  <van-tabbar-item ><i slot="icon" class="iconfont icon-shouye"></i><span class="text">首页</span></van-tabbar-item>
-  <van-tabbar-item ><i slot="icon" class="iconfont icon-wenda"></i><span class="text">问答</span></van-tabbar-item>
-  <van-tabbar-item ><i slot="icon" class="iconfont icon-shipin"></i><span class="text">视频</span></van-tabbar-item>
-  <van-tabbar-item ><i slot="icon" class="iconfont icon-wode"></i><span class="text">我的</span></van-tabbar-item>
+    <van-tabbar v-model="active" class="layout-tabbar" route>
+  <van-tabbar-item to="/" ><i slot="icon" class="iconfont icon-shouye"></i><span class="text">首页</span></van-tabbar-item>
+  <van-tabbar-item to="/question" ><i slot="icon" class="iconfont icon-wenda"></i><span class="text">问答</span></van-tabbar-item>
+  <van-tabbar-item  to="/video"><i slot="icon" class="iconfont icon-shipin"></i><span class="text">视频</span></van-tabbar-item>
+  <van-tabbar-item  to="/my"><i slot="icon" class="iconfont icon-wode"></i><span class="text">我的</span></van-tabbar-item>
 </van-tabbar>
   </div>
 </template>
@@ -19,12 +19,7 @@ export default {
     return {
       active: 0
     }
-  },
-  computed: {},
-  watch: {},
-  created: {},
-  mounted: {},
-  methods: {}
+  }
 }
 </script>
 

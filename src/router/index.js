@@ -11,7 +11,6 @@ const routes = [
   },
   {
     path: '/',
-    name: 'layout',
     component: () => import('@/views/layout'),
     children: [
       {
@@ -21,7 +20,7 @@ const routes = [
       },
       {
         path: '/question',
-        name: 'qa',
+        name: 'question',
         component: () => import('@/views/question/index.vue')
       },
       {
