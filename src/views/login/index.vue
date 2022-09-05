@@ -92,27 +92,27 @@ export default {
         this.$toast.success('登录成功')
       } catch (err) {
         if (err.response.status === 400) {
-          this.$toast.success('手机号或验证码错误')
+          this.$toast.fail('手机号或验证码错误')
         } else {
-          this.$toast.success('登录失败')
+          this.$toast.fail('登录失败')
         }
       }
     },
     async  onSendSms () {
-      console.log('xxx')
       try {
         await this.$refs.LoginForm.validate('mobile')
-        console.log('验证通过')
       } catch (err) {
-        return console.log('验证失败', err)
+        if (err) {
+          return console.log('失败')
+        }
       }
-      console.log('123')
       try {
         await sendSms(this.user.mobile)
         this.isCountDownShow = true
         console.log('发送成功')
       } catch (err) {
         this.isCountDownShow = false
+        console.log(err)
         if (err.response.status === 400) {
           this.$toast('发送太频繁就，请稍后重试')
         } else {
