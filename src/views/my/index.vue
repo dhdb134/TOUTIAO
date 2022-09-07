@@ -6,7 +6,7 @@
           <span class="text">登录 / 注册</span>
         </div>
       </div>
-      <div class="header user-info">
+      <div class="header user-info" >
         <div class="base-info">
           <div class="left">
             <van-image class="avatar" round fit="cover"
@@ -47,21 +47,53 @@
     <span slot="text" class="text">历史</span>
   </van-grid-item>
 </van-grid>
-<van-cell-group>
+<van-cell-group >
   <van-cell title="消息通知" is-link  class="van-cell"/>
   <van-cell title="小智同学" is-link class="van-cell"/>
-  <van-cell title="退出登录" class="logout" />
+  <van-cell title="退出登录" class="logout" @click="onLogout"  clickable />
 </van-cell-group>
     </div>
   </template>
 
 <script>
+import { mapState } from 'vuex'
+import { getUserInfo } from '@/api/user'
 export default {
   name: 'MyIndex',
   components: {},
   props: {},
   data () {
     return {
+      userInfo: {}
+    }
+  },
+  computed: {
+    ...mapState(['user'])
+  },
+  created () {
+    if (this.user) {
+      this.loadUserInfo()
+    }
+  },
+  methods: {
+    onLogout () {
+      this.$dialog.confirm({
+        title: '确认退出吗?'
+      })
+        .then(() => {
+          this.$store.commit('setUser', null)
+        })
+        .catch(() => {
+        // on cancel
+        })
+    },
+    async loadUserInfo () {
+      try {
+        const { data } = await getUserInfo()
+        this.userInfo = data.data
+      } catch (err) {
+        this.$toast(' 失败')
+      }
     }
   }
 }
