@@ -14,6 +14,12 @@
   <van-tab title="标签 2">内容 2</van-tab>
   <van-tab title="标签 3">内容 3</van-tab>
   <van-tab title="标签 4">内容 4</van-tab>
+  <van-tab title="标签 5">内容 5</van-tab>
+  <van-tab title="标签 6">内容 6</van-tab>
+  <div class="placeholder" slot="nav-right" ></div>
+  <div class="hunber-btn" slot="nav-right">
+    <i class="iconfont icon-liebiao"></i>
+  </div>
 </van-tabs>
 
     </div>
@@ -75,6 +81,33 @@ export default {
       }
       .van-tab--active{
         color:#333333
+      }
+      .van-tabs__nav{
+        padding-bottom: 0 ;
+      }
+      .van-tabs__line{
+        bottom: 8px;
+        width: 31px  !important;
+        height: 6px;
+        background-color: #3296fa;
+      }
+      .placeholder{
+        width: 66px;
+        height: 82px;
+        flex-shrink: 0;
+      }
+      .hunber-btn{
+        position: fixed;
+        right: -20px;
+        width: 66px;
+        height: 82px;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        opacity: 0.902;
+        i.iconfont{
+          font-size: 33px;
+        }
       }
     }
   }
