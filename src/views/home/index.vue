@@ -10,7 +10,7 @@
         ><van-icon name="search" color="#fff" size="18" /> 搜索</van-button>
     </van-nav-bar>
     <van-tabs v-model="active" animated swipeable class="channel-tabs">
-  <van-tab title="标签 1">内容 1</van-tab>
+  <van-tab :title="channel.name" v-for="channel in channels" :key = "channel.id">{{channel.name}}的内容 </van-tab>
   <van-tab title="标签 2">内容 2</van-tab>
   <van-tab title="标签 3">内容 3</van-tab>
   <van-tab title="标签 4">内容 4</van-tab>
@@ -101,6 +101,7 @@ export default {
         right: -20px;
         width: 66px;
         height: 82px;
+        line-height: 75 px;
         justify-content: center;
         align-items: center;
         background-color: #fff;
