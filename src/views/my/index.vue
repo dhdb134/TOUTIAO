@@ -10,9 +10,9 @@
         <div class="base-info">
           <div class="left">
             <van-image class="avatar" round fit="cover"
-              src="https://img01.yzcdn.cn/vant/cat.jpeg"
+              :src= 'userinfo.photo'
             />
-            <span class="name">肖雄翔</span>
+            <span class="name">{{userinfo.name}}</span>
           </div>
           <div class="right">
             <van-button size="mini" round>编辑资料</van-button>
@@ -71,6 +71,7 @@ export default {
     ...mapState(['user'])
   },
   created () {
+    // 如果用户登录了，则请求加载用户信息数据
     if (this.user) {
       this.loadUserInfo()
     }

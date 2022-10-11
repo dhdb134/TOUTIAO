@@ -9,13 +9,14 @@
         round
         ><van-icon name="search" color="#fff" size="18" /> 搜索</van-button>
     </van-nav-bar>
+    <!--
+      通过v-model='active' 绑定当前激活标签对应的索引值
+      通过animated属性可以开启切换标签内容时的专场画面
+      通过swipeable属性可以滑动切换标签页
+     -->
     <van-tabs v-model="active" animated swipeable class="channel-tabs">
-  <van-tab :title="channel.name" v-for="channel in channels" :key = "channel.id">{{channel.name}}的内容 </van-tab>
-  <van-tab title="标签 2">内容 2</van-tab>
-  <van-tab title="标签 3">内容 3</van-tab>
-  <van-tab title="标签 4">内容 4</van-tab>
-  <van-tab title="标签 5">内容 5</van-tab>
-  <van-tab title="标签 6">内容 6</van-tab>
+  <van-tab :title="channel.name" v-for="channel in channels" :key = "channel.id">
+     <Articlelist/> </van-tab>
   <div class="placeholder" slot="nav-right" ></div>
   <div class="hunber-btn" slot="nav-right">
     <i class="iconfont icon-liebiao"></i>
@@ -27,9 +28,12 @@
 
 <script>
 import { getUserChannel } from '@/api/user'
+import Articlelist from './components/article-list.vue'
 export default {
   name: 'HomeIndex',
-  components: {},
+  components: {
+    Articlelist
+  },
   props: {},
   data () {
     return {
@@ -102,6 +106,7 @@ export default {
         width: 66px;
         height: 82px;
         line-height: 75 px;
+        display: flex;
         justify-content: center;
         align-items: center;
         background-color: #fff;
