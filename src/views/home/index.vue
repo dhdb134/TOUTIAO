@@ -1,6 +1,6 @@
 <template>
     <div class="Home-container">
-      <van-nav-bar class="page-nav-bar"  >
+      <van-nav-bar class="page-nav-bar" fixed >
         <van-button
         slot="title"
         class="btn-search"
@@ -16,7 +16,7 @@
      -->
     <van-tabs v-model="active" animated swipeable class="channel-tabs">
   <van-tab :title="channel.name" v-for="channel in channels" :key = "channel.id">
-     <Articlelist/> </van-tab>
+     <Articlelist :channel = 'channel'/> </van-tab>
   <div class="placeholder" slot="nav-right" ></div>
   <div class="hunber-btn" slot="nav-right">
     <i class="iconfont icon-liebiao"></i>
@@ -29,6 +29,7 @@
 <script>
 import { getUserChannel } from '@/api/user'
 import Articlelist from './components/article-list.vue'
+
 export default {
   name: 'HomeIndex',
   components: {
@@ -60,6 +61,8 @@ export default {
 
   <style lang="less" scoped>
     .Home-container{
+      padding-top: 174px;
+      padding-bottom: 100px;
     .van-nav-bar__title{
           max-width: unset;
         }
@@ -74,6 +77,11 @@ export default {
     /deep/ .channel-tabs{
       .van-tabs__wrap{
         height: 82px;
+        position: fixed;
+    top: 88px;
+    left: 0;
+    right: 0;
+
       }
       .van-tab {
       min-width: 200px;

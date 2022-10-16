@@ -11,10 +11,11 @@ const routes = [
   },
   {
     path: '/',
+    // name: 'layout', // 如果父路由有默认的子路由，那父路由得name没有意义
     component: () => import('@/views/layout'),
     children: [
       {
-        path: '',
+        path: '', // 默认子路由
         name: 'home',
         component: () => import('@/views/home/index.vue')
       },

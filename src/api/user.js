@@ -1,6 +1,7 @@
 // import store from '@/store'
 import request from '@/utile/request'
 
+import axios from 'axios'
 export const login = data => {
   return request({
     methods: 'POST',
@@ -27,8 +28,8 @@ export const getUserInfo = () => {
   })
 }
 export const getUserChannel = () => {
-  return request({
+  return axios({
     methods: 'GET',
-    url: '/app/v1_0/user/channels'
+    url: 'http://127.0.0.1:3000/user'
   })
 }

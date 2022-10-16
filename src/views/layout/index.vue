@@ -1,6 +1,7 @@
 <template>
   <div class="layout-container">
     <router-view />
+    <!-- route 开启路由模式 -->
     <van-tabbar v-model="active" class="layout-tabbar" route>
   <van-tabbar-item to="/" ><i slot="icon" class="iconfont icon-shouye"></i><span class="text">首页</span></van-tabbar-item>
   <van-tabbar-item to="/question" ><i slot="icon" class="iconfont icon-wenda"></i><span class="text">问答</span></van-tabbar-item>

@@ -1,12 +1,13 @@
 // 1.导入express
 const express = require('express')
-// 2.创建web 服务器
 const app = express()
+// 2.创建web 服务器
 
 // 4.监听客户端的GET和POST客户端请求，并向客户端响应具体的内容
 app.get('/user', (req, res) => {
-//  调用express 提供的res.send() 方法，向客户端响应一JSON对象
-  res.send({ name: 'zs', age: 20, gender: '男' })
+  const data = { data: { channels: [{ id: 0, name: '推荐' }, { id: 1, name: 'javascript' }, { id: 2, name: 'css' }, { id: 3, name: 'java' }, { id: 4, name: 'c++' }, { id: 5, name: '前端' }] } }
+  //  调用express 提供的res.send() 方法，向客户端响应一JSON对象
+  res.send(data)
 })
 app.post('/user', (req, res) => {
 // 调用express 提供的res.send() 方法，向客户端响应一个文本字符串
@@ -25,6 +26,6 @@ app.get('/user/:id/:name', (req, res) => {
 })
 
 // 3.启动web服务器
-app.listen(80, () => {
-  console.log('express sever running at http://127.0.0.1')
+app.listen(4000, () => {
+  console.log('express sever running at http://127.0.0.1:3000')
 })
