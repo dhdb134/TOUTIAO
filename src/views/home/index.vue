@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       channels: [],
-      active: 2
+      active: 0
     }
   },
   created () {
