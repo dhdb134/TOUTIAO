@@ -13,20 +13,25 @@
   error-text="请求失败，点击重新加载"
   @load="onLoad"
 >
-  <van-cell
-  v-for="(airticle,index) in list"
+ <airtic-item v-for="(airticle,index) in list"
   :key="index"
-  :title="airticle.title" />
+  :airticle="airticle"
+  />
+  // <!-- <van-cell
+  // v-for="(airticle,index) in list"
+  // :key="index"
+  // :title="airticle.title" /> -->
 </van-list>
 </van-pull-refresh>
   </div>
 </template>
 
 <script>
-import gerAirticles from '@/api/airticle.js'
+import AirticItem from '@/components/airtic-item/'
+import axios from 'axios'
 export default {
   name: 'Article-list ',
-  components: { },
+  components: { AirticItem },
   props: {
     channel: {
       type: Object,
@@ -48,13 +53,17 @@ export default {
     async onLoad () {
       try {
       // 1.请求获取数据
-        const { data } = await gerAirticles({
-          channel_id: this.channel.id, // 频道id
-          // timestamp简单理解就是请求数据的页码.
-          // 请求数据的第一页：当前最新事件戳
-          // 用于请求之后数据的时间戳会在当前请求结果中返回给你
-          timestamp: this.timestamp || Date.now(),
-          with_top: 1 // 是否包含置顶，进入页面第一次请求时要包含置顶文章，1-包含置顶，0-不包含置顶
+        const { data } = await axios({
+          method: 'GET',
+          url: 'http://127.0.0.1:3000/airticlist',
+          params: {
+            channel_id: this.channel.id, // 频道id
+            // timestamp简单理解就是请求数据的页码.
+            // 请求数据的第一页：当前最新事件戳
+            // 用于请求之后数据的时间戳会在当前请求结果中返回给你
+            timestamp: this.timestamp || Date.now(),
+            with_top: 1 // 是否包含置顶，进入页面第一次请求时要包含置顶文章，1-包含置顶，0-不包含置顶
+          }
         })
         // if (Math.random() > 0.5) {
         //   JSON.parse('SDFDS') // 测试报错
@@ -85,13 +94,17 @@ export default {
     async onRefresh () {
       try {
         // 1.请求获取数据
-        const { data } = await gerAirticles({
-          channel_id: this.channel.id, // 频道id
-          // timestamp简单理解就是请求数据的页码.
-          // 请求数据的第一页：当前最新事件戳
-          // 用于请求之后数据的时间戳会在当前请求结果中返回给你
-          timestamp: Date.now(), // 下拉刷新，每次请求最新数据，所以传递最新时间戳
-          with_top: 1 // 是否包含置顶，进入页面第一次请求时要包含置顶文章，1-包含置顶，0-不包含置顶
+        const { data } = await axios({
+          method: 'GET',
+          url: 'http://127.0.0.1:3000/airticlist',
+          params: {
+            channel_id: this.channel.id, // 频道id
+            // timestamp简单理解就是请求数据的页码.
+            // 请求数据的第一页：当前最新事件戳
+            // 用于请求之后数据的时间戳会在当前请求结果中返回给你
+            timestamp: this.timestamp || Date.now(),
+            with_top: 1 // 是否包含置顶，进入页面第一次请求时要包含置顶文章，1-包含置顶，0-不包含置顶
+          }
         })
         // 2.将数据追加到列表顶部
         const { results } = data.data

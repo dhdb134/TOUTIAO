@@ -60,6 +60,10 @@ export default {
 </script>
 
   <style lang="less" scoped>
+  .article-list{
+  height: 79vh;
+  overflow-y: auto;
+  }
     .Home-container{
       padding-top: 174px;
       padding-bottom: 100px;
