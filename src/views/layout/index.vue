@@ -14,7 +14,6 @@
 <script>
 export default {
   name: 'LayoutIndex',
-  components: {},
   props: {},
   data () {
     return {

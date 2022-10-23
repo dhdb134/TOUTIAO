@@ -13,7 +13,7 @@
   error-text="请求失败，点击重新加载"
   @load="onLoad"
 >
- <airtic-item v-for="(airticle,index) in list"
+ <AirticItem v-for="(airticle,index) in list"
   :key="index"
   :airticle="airticle"
   />
@@ -30,7 +30,7 @@
 import AirticItem from '@/components/airtic-item/'
 import axios from 'axios'
 export default {
-  name: 'Article-list ',
+  name: 'Airticle-List ',
   components: { AirticItem },
   props: {
     channel: {

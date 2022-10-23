@@ -16,7 +16,7 @@
      -->
     <van-tabs v-model="active" animated swipeable class="channel-tabs">
   <van-tab :title="channel.name" v-for="channel in channels" :key = "channel.id">
-     <Articlelist :channel = 'channel'/> </van-tab>
+     <Airticlelist :channel = 'channel'/> </van-tab>
   <div class="placeholder" slot="nav-right" ></div>
   <div class="hunber-btn" slot="nav-right">
     <i class="iconfont icon-liebiao"></i>
@@ -28,12 +28,12 @@
 
 <script>
 import { getUserChannel } from '@/api/user'
-import Articlelist from './components/article-list.vue'
+import Airticlelist from './components/airticle-list.vue'
 
 export default {
   name: 'HomeIndex',
   components: {
-    Articlelist
+    Airticlelist
   },
   props: {},
   data () {
@@ -41,9 +41,6 @@ export default {
       channels: [],
       active: 0
     }
-  },
-  created () {
-    this.loadChannles()
   },
   methods: {
     async loadChannles () {
@@ -55,7 +52,11 @@ export default {
         this.$toast('获取失败')
       }
     }
+  },
+  created () {
+    this.loadChannles()
   }
+
 }
 </script>
 
