@@ -17,7 +17,7 @@
   :key="index"
   :airticle="airticle"
   />
-  // <!-- <van-cell
+   <!-- <van-cell
   // v-for="(airticle,index) in list"
   // :key="index"
   // :title="airticle.title" /> -->

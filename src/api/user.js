@@ -33,3 +33,11 @@ export const getUserChannel = () => {
     url: 'http://127.0.0.1:3000/user'
   })
 }
+
+export const getAllchannels = () => {
+  return axios({
+    methods: 'GET',
+    url: 'http://127.0.0.1:3000/channels'
+
+  })
+}

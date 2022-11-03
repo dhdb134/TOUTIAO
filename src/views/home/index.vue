@@ -18,28 +18,42 @@
   <van-tab :title="channel.name" v-for="channel in channels" :key = "channel.id">
      <Airticlelist :channel = 'channel'/> </van-tab>
   <div class="placeholder" slot="nav-right" ></div>
-  <div class="hunber-btn" slot="nav-right">
+  <div class="hunber-btn" slot="nav-right" @click="isChannelEditShow= true">
     <i class="iconfont icon-liebiao"></i>
   </div>
 </van-tabs>
+<van-popup
+  v-model="isChannelEditShow"
+  closeable
+  close-icon-position="top-left"
+  position="bottom"
+  :style="{ height: '100%' }"
+>
+<channel-edit
+ :Mychannels="channels"
+ :active="active"  />
+</van-popup>
 
     </div>
   </template>
 
 <script>
+import ChannelEdit from './components/channel-edit.vue'
 import { getUserChannel } from '@/api/user'
 import Airticlelist from './components/airticle-list.vue'
 
 export default {
   name: 'HomeIndex',
   components: {
-    Airticlelist
+    Airticlelist,
+    ChannelEdit
   },
   props: {},
   data () {
     return {
       channels: [],
-      active: 0
+      active: 0,
+      isChannelEditShow: false
     }
   },
   methods: {
@@ -115,7 +129,7 @@ export default {
       }
       .hunber-btn{
         position: fixed;
-        right: -20px;
+        right: -10px;
         width: 66px;
         height: 82px;
         line-height: 75 px;

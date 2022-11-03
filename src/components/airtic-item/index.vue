@@ -39,8 +39,8 @@ fit="cover"
  <van-image
     class="right-cover"
     slot="default"
-  width="100"
-  height="100"
+  width="80"
+  height="80"
   src="https://img01.yzcdn.cn/vant/cat.jpeg"
   fit="cover"
 
