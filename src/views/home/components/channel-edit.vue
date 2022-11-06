@@ -9,13 +9,14 @@
         round
         size="mini"
         @click="isEdit = !isEdit"
-        >编辑</van-button>
+        >{{ isEdit ? '完成' : '编辑'}}</van-button>
     </van-cell>
     <van-grid :gutter="10" class="my-grid">
   <van-grid-item
   class="grid-item"
-   v-for=" channel in Mychannels"
-   :key="channel.id"
+   v-for="( channel, index ) in Mychannels"
+   :key="channel.di"
+   @click="onMyChannelClick(channel,index)"
    >
    <!--
     v-bind:class 语法：
@@ -27,7 +28,7 @@
 <van-icon
 slot="icon"
 name="clear"
-v-show="isEdit"></van-icon>
+v-show="isEdit && !fiexChannels.includes(channel.id)"></van-icon>
    <span
    class="text"
    :class="{active: channel.id === active}"
@@ -54,6 +55,10 @@ v-show="isEdit"></van-icon>
 </template>
 
 <script>
+
+import { addUserChannel, deleteUserChannel } from '@/api/channel'
+import { setItem } from '@/utile/storge'
+import { mapState } from 'vuex'
 import { getAllchannels } from '@/api/user'
 export default {
   name: 'ChannelEdit',
@@ -72,10 +77,14 @@ export default {
     return {
       allchannels: [], // 所有频道
       localMychannels: this.Mychannels, // 改变props里的值会影响父元素，会报错，所以定义一个变量接收props里的Mychannels
-      isEdit: false // 控制编辑状态显示
+      isEdit: false, // 控制编辑状态显示
+      fiexChannels: [0] // 固定频道，不允许删除
     }
   },
   computed: {
+    ...mapState(['user']),
+    // 计算属性会观测内部依赖数据的变化
+    // 如果依赖数据发生变化，则计算属性会重新执行
     recommendChannels () {
       // 数组filter 方法 ：遍历数组把符合条件的元素储存到新数组中
       return this.allchannels.filter(channel => {
@@ -90,8 +99,8 @@ export default {
     //   const channels = []
     //   this.allchannels.forEach(channel => {
     //     // find遍历数组,找到满足条件的元素项
-    //     const result = this.Mychannels.find(Mychannels => {
-    //       return Mychannels.id === channel.id
+    //     const result = this.Mychannels.find(Mychannel => {
+    //       return Mychannel.id === channel.id
     //     })
     //     // 如果我的频道中不包括该频道选项，则收集到频道中
     //     if (!result) {
@@ -118,8 +127,55 @@ export default {
         this.$toast('数据接收失败')
       }
     },
-    onAddChannel (channel) {
+    async onAddChannel (channel) {
       this.localMychannels.push(channel)
+
+      // 数据持久化处理
+      if (this.user) {
+        try {
+        // 已经登录，把请求数据接口放到线上
+          await addUserChannel({
+            id: channel.id, // 频道ID
+            seq: this.Mychannels.length // 序号
+          })
+        } catch (err) {
+          this.$toast('保存失败请稍后重试')
+        }
+      } else {
+        setItem('TOUTIAO_CHANNELS', this.localMychannels)
+      }
+    },
+    onMyChannelClick (channel, index) {
+      if (this.isEdit) {
+        // 编辑状态，执行删除频道
+        // 数组splice方法：
+        // 参数1： 要删除的元素的开始索引（包括该元素索引）
+        // 参数2： 删除的个数，如果不指定，则从参数1一直删除完后面的
+
+        // 1 如果是固定频道则不删除
+        if (this.fiexChannels.includes(channel.id)) {
+          return
+        }
+        // 2.删除频道选项
+        this.localMychannels.splice(index, 1)
+        // 3.如果删除激活频道之前的频道，则更新激活的频道项
+        if (index <= this.active) {
+          // 让激活频道索引减一
+          this.$emit('update-active', this.active - 1, true)
+        }
+        // 4.处理持久化
+        this.deleteChannel(channel)
+      } else {
+        // 4.非编辑状态，执行切换频道
+        this.$emit('update-active', index, false)
+      }
+    },
+    async deleteChannel (channel) {
+      if (this.user) {
+        deleteUserChannel(channel.id)
+      } else {
+        setItem('TOUTIAO_CHANNELS', this.localMychannels)
+      }
     }
   }
 
