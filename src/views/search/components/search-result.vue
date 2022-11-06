@@ -24,10 +24,6 @@ export default {
       finished: false
     }
   },
-  computed: {},
-  watch: {},
-  created: {},
-  mounted: {},
   methods: {
     onLoad () {
       // 异步更新数据

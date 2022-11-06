@@ -9,18 +9,7 @@
 
 <script>
 export default {
-  name: 'SearchSuggestion',
-  components: {},
-  props: {},
-  data () {
-    return {
-    }
-  },
-  computed: {},
-  watch: {},
-  created: {},
-  mounted: {},
-  methods: {}
+  name: 'SearchSuggestion'
 }
 </script>
 

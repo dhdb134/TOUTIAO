@@ -11,15 +11,19 @@
   background="#3296fa"
     @search="onSearch"
     @cancel="onCancel"
+    @focus="isResultShow = false"
   />
 </form>
 <!-- /顶部搜索栏 -->
+
 <!-- 历史记录 -->
-<search-result v-if=" isResutShow"/>
+<search-result v-if="isResultShow"/>
 <!-- /历史记录 -->
+
 <!-- 联想建议 -->
 <search-suggestion v-else-if="searchText"/>
 <!-- /联想建议 -->
+
 <!-- 搜索历史记录 -->
 <search-history v-else />
 <!-- /搜索历史记录 -->
@@ -41,13 +45,13 @@ export default {
   data () {
     return {
       searchText: '',
-      isResutShow: false // 控制搜索结果展示
+      isResultShow: false // 控制搜索结果展示
     }
   },
   methods: {
     onSearch (val) {
       console.log(val)
-      this.isResutShow = true
+      this.isResultShow = true
     },
     onCancel () {
       console.log('onCancel')
