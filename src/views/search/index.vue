@@ -14,17 +14,15 @@
   />
 </form>
 <!-- /顶部搜索栏 -->
-<!-- 搜索历史记录 -->
-<search-history/>
-<!-- /搜索历史记录 -->
-
-<!-- 联想建议 -->
-<search-suggestion/>
-<!-- /联想建议 -->
-
 <!-- 历史记录 -->
-<search-result/>
+<search-result v-if=" isResutShow"/>
 <!-- /历史记录 -->
+<!-- 联想建议 -->
+<search-suggestion v-else-if="searchText"/>
+<!-- /联想建议 -->
+<!-- 搜索历史记录 -->
+<search-history v-else />
+<!-- /搜索历史记录 -->
     </div>
   </template>
 
@@ -49,6 +47,7 @@ export default {
   methods: {
     onSearch (val) {
       console.log(val)
+      this.isResutShow = true
     },
     onCancel () {
       console.log('onCancel')
