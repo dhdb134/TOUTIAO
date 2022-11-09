@@ -1,6 +1,6 @@
 <template>
     <div class="Home-container">
-      <van-nav-bar class="page-nav-bar" fixed >
+      <van-nav-bar class="page-nav-bar" fixed>
         <van-button
         slot="title"
         class="btn-search"
